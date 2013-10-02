@@ -1,0 +1,61 @@
+P → D L
+D → B N ; D | B N ;
+B → int | float
+N → N , id | id
+L → S ; L | S ;
+S → id = E | E
+E → E + T { print('+') }| T
+T → T × F { print('×') }| F
+F → ( E ) | num {print (num.value)}| id {print (id.value)}
+
+Eliminate Left Recursion
+
+P → DL
+D → B N ; D | B N ;
+B → int | float
+N → id N'
+N'→ , id N'|Ɛ
+L → S ; L | S ;
+S → id = E | E
+E → T E'
+E' → +T { print('+') } E'|Ɛ
+T → F T'
+T'→ × F { print('×') } T'|Ɛ
+F → ( E ) | num {print (num.value)}| id {print (id.value)
+
+Left Factored Grammar
+
+P → DL
+D → B N ; D'
+D' → D | Ɛ
+B → int | float
+N → id N'
+N'→ ,id N'|Ɛ
+L → S ; L'
+L'→ L | Ɛ
+S → id = E | E
+E → T E'
+E' → +T { print('+') } E'|Ɛ
+T → F T'
+T'→ × F { print('×') } T'|Ɛ
+F → ( E ) | num {print(num.value)} | id {print (id.value)
+
+First Sets
+
+F(P)={int,float}
+F(D)={int,float}
+F(B)={int,float}
+F(D')={int,float,Ɛ}
+F(N)={id}
+F(N')={,,Ɛ}
+F(L)={id,(,num}
+F(L')={id,(,num,Ɛ}
+F(S)={id,(,num}
+F(E)={(,num,id}
+F(E')={+,Ɛ}
+F(T)={(,num,id}
+F(T')= {× ,Ɛ}
+F(F)= {(,num,id}
+
+
+
