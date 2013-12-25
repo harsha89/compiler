@@ -19,6 +19,7 @@ public class Parser {
     Env top = null; // current or top symbol table
     int used = 0; // storage used for declarations
     private Id currentAssigneeSymbol;
+    private int skipFlag=-1;
     private ThreeAddressCodeGenarator threeAddressCodeGenerator;
     public Parser(Lexer lex , StackMachine stackMachine) throws IOException {
         lexer = lex;
@@ -36,8 +37,13 @@ public class Parser {
     }
 
     void match(int t) throws IOException {
-        if ( look.tag == t ) move();
-        else error("syntax error");
+        if ( look.tag == t && skipFlag==-1) {
+            move();
+        } else if(skipFlag==1) {
+            skipFlag=-1;
+        } else {
+            error("syntax error");
+        }
     }
 
 
@@ -94,24 +100,27 @@ public class Parser {
     }
 
     public void L() throws IOException {
-
         S();
         stackMachine.evaluate(null);
-        currentAssigneeSymbol.value=stackMachine.value;
-        //System.out.println();
-        postFix.append("\n");
-        if(currentAssigneeSymbol.type=="int" && stackMachine.value instanceof Float) {
-            postFix.append("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.type+ " calculated value type="+Type.Float.tostring()+"\n");
-            // System.out.println("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.typeOb.tostring()+ " calculated value type="+Type.Float.tostring());
-        }else if(currentAssigneeSymbol.type=="float" && stackMachine.value instanceof Integer) {
-            postFix.append("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.type+ " calculated value type="+Type.Int.tostring()+"\n");
-            // System.out.println("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.typeOb.tostring()+ " calculated value type="+Type.Int.tostring());
+        if(currentAssigneeSymbol!=null){
+            currentAssigneeSymbol.value=stackMachine.value;
+            //System.out.println();
+            postFix.append("\n");
+            if(currentAssigneeSymbol.type=="int" && stackMachine.value instanceof Float) {
+                postFix.append("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.type+ " calculated value type="+Type.Float.tostring()+"\n");
+                // System.out.println("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.typeOb.tostring()+ " calculated value type="+Type.Float.tostring());
+            }else if(currentAssigneeSymbol.type=="float" && stackMachine.value instanceof Integer) {
+                postFix.append("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.type+ " calculated value type="+Type.Int.tostring()+"\n");
+                // System.out.println("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.typeOb.tostring()+ " calculated value type="+Type.Int.tostring());
+            }
+            //System.out.println(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value);
+            postFix.append(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value+"\n");
+        } else {
+            //System.out.println();
+            postFix.append("\n");
+            postFix.append(stackMachine.value);
         }
-
-        //System.out.println(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value);
-        postFix.append(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value+"\n");
         currentAssigneeSymbol=null;
-
         // toCode(AbsNode.used,bw);
         AbstractNode.used=new ArrayList<AbstractNode>(); // new set of nodes for new stmt
         AbstractNode.statVal=0;
@@ -130,14 +139,21 @@ public class Parser {
     public void S() throws IOException {
         AbstractNode node;
         AbstractNode exprn;
-        if(look.tag==Tag.ID){
+        Id assId;
+        if (look.tag == '(' || look.tag == Tag.NUM) {
+            node=E();
+        }
+        else if(look.tag==Tag.ID){
             currentAssigneeSymbol= (Id) look;
             match(Tag.ID);
-            match('=');
-            exprn=E();
-            node=threeAddressCodeGenerator.getNode(threeAddressCodeGenerator.getLeaf(currentAssigneeSymbol),exprn , "="); //3AC for assignment
-        } else if(look.tag==Tag.NUM ||look.tag==Tag.FLOAT|| look.tag==')') {
-            node=E();
+            if(look.tag=='=') {
+                match('=');
+                exprn=E();
+                node=threeAddressCodeGenerator.getNode(threeAddressCodeGenerator.getLeaf(currentAssigneeSymbol),exprn , "="); //3AC for assignment
+            } else {
+                skipFlag=1;
+                node=E();
+            }
         } else {
             throw new Error("Syntax Error");
         }
