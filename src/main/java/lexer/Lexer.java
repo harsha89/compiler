@@ -8,6 +8,8 @@ package lexer; /**
 // File Lexer.java
 import java. io .* ;
 import java. util.* ;
+
+import inter.Id;
 import symbols.*;
 public class Lexer {
 
@@ -19,7 +21,7 @@ public class Lexer {
 
     private Type currentType;
 
-    void reserve(Word t)
+    void reserve(Id t)
     {
         words.put (t.lexeme, t) ;
     }
@@ -78,7 +80,7 @@ public class Lexer {
             } while( Character.isLetterOrDigit(peek));
 
             String s = b.toString();
-            Word w = (Word) words.get(s);
+            Id w = (Id) words.get(s);
             if ( w != null ) {
                 if(w.lexeme.equals("int")) {
                    currentType=Type.Int;
@@ -91,7 +93,8 @@ public class Lexer {
                 throw new Error("Identifier "+s+" is not defined");
             }
 
-            w = new Word(s,Tag.ID,0,currentType);
+            w = new Id(Tag.ID,s);
+            w.type=currentType.lexeme;
             words.put(s, w);
             return w;
         }

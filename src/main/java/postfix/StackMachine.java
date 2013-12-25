@@ -1,13 +1,9 @@
 package postfix;
 
+import inter.Id;
 import lexer.Num;
 import lexer.Real;
 import lexer.Token;
-import lexer.Word;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,8 +29,8 @@ public class StackMachine {
         Object value2 = null;
         Object result = null;
         if(top!=null && nextToTop!=null) {
-            if(top instanceof Word) {
-                Word word=(Word) top;
+            if(top instanceof Id) {
+                Id word=(Id) top;
                 value1= word.value;
             } else if(top instanceof Num) {
                 Num num= (Num) top;
@@ -45,8 +41,8 @@ public class StackMachine {
             }
 
             if(nextToTop!=null) {
-                if(nextToTop instanceof Word) {
-                    Word word=(Word) nextToTop;
+                if(nextToTop instanceof Id) {
+                    Id word=(Id) nextToTop;
                     value2= word.value;
                 } else if(nextToTop instanceof Num) {
                     Num num= (Num) nextToTop;
@@ -91,8 +87,8 @@ public class StackMachine {
                 postfixTokenStack.push(real);
             }
         } else {
-            if(top instanceof Word) {
-                Word word=(Word) top;
+            if(top instanceof Id) {
+                Id word=(Id) top;
                 value= word.value;
             } else if(top instanceof Num) {
                 Num num= (Num) top;

@@ -9,14 +9,16 @@ package lexer;
  */
 // File Real.java
 public class Real extends Token {
-public final float value;
+    public final float value;
+    public final String lexeme;
+    public Real(float v) {
+        super(Tag.FLOAT) ;
+        value = v;
+        lexeme=Float.toString(value);
+        type="float";
+    }
 
-public Real(float v) {
-    super(Tag.FLOAT) ;
-    value = v;
-}
-
-public String tostring(){
-    return "" + value;
+    public String tostring(){
+        return "" + value;
     }
 }

@@ -1,34 +1,29 @@
 package parser;
 
-import inter.*;
+
+import inter.Id;
 import lexer.*;
 import postfix.StackMachine;
 import symbols.Env;
 import symbols.Type;
 
-import javax.script.ScriptException;
 import java.io.IOException;
+import java.util.ArrayList;
 
-/**
- * Created with IntelliJ IDEA.
- * User: harsha
- * Date: 9/25/13
- * Time: 6:34 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Parser {
-
+    public StringBuffer postFix=new StringBuffer();
     private static String lookahead;
     private Lexer lexer;// lexical analyzer for this parser
     private StackMachine stackMachine;
     private Token look; // lookahead tagen
     Env top = null; // current or top symbol table
     int used = 0; // storage used for declarations
-    private Word currentAssigneeSymbol;
-
+    private Id currentAssigneeSymbol;
+    private ThreeAddressCodeGenarator threeAddressCodeGenerator;
     public Parser(Lexer lex , StackMachine stackMachine) throws IOException {
         lexer = lex;
         this.stackMachine=stackMachine;
+        threeAddressCodeGenerator=new ThreeAddressCodeGenarator();
         move();
     }
 
@@ -76,7 +71,7 @@ public class Parser {
 
     public void N(Type b) throws IOException {
         Token tok = look;
-        Id id = new Id((Word)tok, b, used);
+        Id id = (Id)tok;
         top.put(tok, id);
         used = used + b.width;
         match(Tag.ID);
@@ -87,7 +82,7 @@ public class Parser {
         if(look.tag==',') {
             match(',');
             Token tok = look;
-            Id id = new Id((Word)tok, b, used);
+            Id id = (Id)tok;
             top.put(tok, id);
             used = used + b.width;
             match(Tag.ID);
@@ -99,20 +94,27 @@ public class Parser {
     }
 
     public void L() throws IOException {
-        Stmt stmt;
-        stmt=S();
+
+        S();
         stackMachine.evaluate(null);
         currentAssigneeSymbol.value=stackMachine.value;
-        System.out.println();
-
-        if(currentAssigneeSymbol.type==Type.Int && stackMachine.value instanceof Float) {
-            System.out.println("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.type.tostring()+ " calculated value type="+Type.Float.tostring());
-        }else if(currentAssigneeSymbol.type==Type.Float && stackMachine.value instanceof Integer) {
-            System.out.println("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.type.tostring()+ " calculated value type="+Type.Int.tostring());
+        //System.out.println();
+        postFix.append("\n");
+        if(currentAssigneeSymbol.type=="int" && stackMachine.value instanceof Float) {
+            postFix.append("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.type+ " calculated value type="+Type.Float.tostring()+"\n");
+            // System.out.println("Warning : Stack Machine-Time mismatch (Narrowing convention) between assignee id type ="+currentAssigneeSymbol.typeOb.tostring()+ " calculated value type="+Type.Float.tostring());
+        }else if(currentAssigneeSymbol.type=="float" && stackMachine.value instanceof Integer) {
+            postFix.append("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.type+ " calculated value type="+Type.Int.tostring()+"\n");
+            // System.out.println("Warning : Stack Machine-Time mismatch (Widening convention) between assignee id type ="+currentAssigneeSymbol.typeOb.tostring()+ " calculated value type="+Type.Int.tostring());
         }
 
-        System.out.println(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value);
+        //System.out.println(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value);
+        postFix.append(currentAssigneeSymbol.lexeme+"="+currentAssigneeSymbol.value+"\n");
         currentAssigneeSymbol=null;
+
+        // toCode(AbsNode.used,bw);
+        AbstractNode.used=new ArrayList<AbstractNode>(); // new set of nodes for new stmt
+        AbstractNode.statVal=0;
         match(';');
         L1();
     }
@@ -125,99 +127,112 @@ public class Parser {
         }
     }
 
-    public Stmt S() throws IOException {
-        Stmt stmt=null;
+    public void S() throws IOException {
+        AbstractNode node;
+        AbstractNode exprn;
         if(look.tag==Tag.ID){
-            currentAssigneeSymbol= (Word) look;
-            Token tok=look;
-            Id id = top.get(tok);
-            if ( id == null ) error(tok.tostring() + " undeclared") ;
+            currentAssigneeSymbol= (Id) look;
             match(Tag.ID);
             match('=');
-            stmt = new Set(id, E());
+            exprn=E();
+            node=threeAddressCodeGenerator.getNode(threeAddressCodeGenerator.getLeaf(currentAssigneeSymbol),exprn , "="); //3AC for assignment
         } else if(look.tag==Tag.NUM ||look.tag==Tag.FLOAT|| look.tag==')') {
-            E();
+            node=E();
         } else {
             throw new Error("Syntax Error");
         }
-        return stmt;
     }
 
-    public Expr E() throws IOException {
-        Expr x=null;
-        x=T();
-        x=E1(x);
-        return x;
+    public AbstractNode E() throws IOException {
+        AbstractNode node = null;
+        AbstractNode termnode = null;
+
+        termnode=T();
+        node=E1(termnode);
+        return node;
     }
 
 
-    public Expr E1(Expr xx) throws IOException {
-            Expr x = xx;
-            if(look.tag=='+') {
-                Token tok=look;
-                match('+');
-                x=new Arith(look,x,T());
-                System.out.print("+");
-                stackMachine.evaluate("+");
-                return E1(x);
-            }
-            return x;
+    public AbstractNode E1(AbstractNode termnodeinh) throws IOException {
+        AbstractNode node; // node which rerpesents the operation so far
+        AbstractNode snode;  // synthesised attribute which gives the full answer
+        AbstractNode pretn=termnodeinh; //previous term nonterminal is inherited
+        AbstractNode curtn;
+        if(look.tag=='+') {
+            match('+');
+            curtn=T();
+            //System.out.print("+");
+            postFix.append("+");
+            stackMachine.evaluate("+");
+            node=threeAddressCodeGenerator.getNode(pretn, curtn, "+");
+            snode=E1(node);
+        }
+        else {
+            snode=termnodeinh;
+        }
+        return snode;
     }
 
-    public Expr T() throws IOException {
-        Expr x;
-        x=F();
-        x=T1(x);
-        return x;
+    public AbstractNode T() throws IOException {
+        AbstractNode node = null;
+        AbstractNode factnode = null;
+        factnode=F();
+        node=T1(factnode);
+        return node;
     }
 
-    public Expr T1(Expr xx) throws IOException {
-            Expr x=xx;
-            if(look.tag=='*') {
-                Token tok=look;
-                match('*');
-                x=new Arith(tok,x,F());
-                System.out.print("*");
-                stackMachine.evaluate("*");
-                return T1(x);
-            }
-            return x;
+    public AbstractNode T1(AbstractNode factnodeinh) throws IOException {
+        AbstractNode node; // node which rerpesents the operation so far
+        AbstractNode snode;  // synthesised attribute which gives the full answer
+        AbstractNode prefn=factnodeinh; //previous factor nonterminal is inherited
+        AbstractNode curfn;
+        if(look.tag=='*') {
+            match('*');
+            curfn=F();
+            //System.out.print("*");
+            postFix.append("*");
+            stackMachine.evaluate("*");
+            node=threeAddressCodeGenerator.getNode(prefn, curfn, "*");
+            snode=T1(node);
+        } else {
+            snode=factnodeinh;
+        }
+        return snode;
     }
 
-    public Expr F() throws IOException {
-        Expr x=null;
+    public AbstractNode F() throws IOException {
+        AbstractNode abstractNode=null;
         if(look.tag=='('){
             match('(');
-            x=E();
+            abstractNode=E();
             match(')');
-            return x;
         } else if (look.tag==Tag.ID) {
-            Word word=(Word) look;
+            Id word=(Id) look;
             String workLex=word.lexeme;
             stackMachine.postfixTokenStack.push(word);
             match(Tag.ID);
-            System.out.print(workLex);
-            Id id = top.get(word);
-            if( id == null ) {
-                error(look.toString() +"undeclared");
-            }
+            abstractNode=threeAddressCodeGenerator.getLeaf(word);// changed
+            postFix.append(workLex);
+            //System.out.print(workLex);
         } else if( look.tag==Tag.NUM) {
             Num num=(Num) look;
             String IntNum=num.tostring();
             match(Tag.NUM);
             stackMachine.postfixTokenStack.push(num);
-            System.out.print(IntNum);
-            x=new Constant(num,Type.Int);
+            abstractNode=threeAddressCodeGenerator.getLeaf(num);// changed
+            postFix.append(IntNum);
+            //System.out.print(IntNum);
         } else if( look.tag==Tag.FLOAT) {
             Real real=(Real) look;
             String floatNum =real.tostring();
             match(Tag.FLOAT);
             stackMachine.postfixTokenStack.push(real);
-            System.out.print(floatNum);
-            x=new Constant(real,Type.Float);
+            abstractNode=threeAddressCodeGenerator.getLeaf(real);// changed
+            postFix.append(floatNum);
+            //System.out.print(floatNum);
         } else {
             throw new Error("Syntax Error");
         }
-        return x;
+        return abstractNode;
     }
 }

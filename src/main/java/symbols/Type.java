@@ -1,7 +1,7 @@
 package symbols;
 
+import inter.Id;
 import lexer.Tag;
-import lexer.Word;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,13 +10,13 @@ import lexer.Word;
  * Time: 12:36 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Type extends Word {
+public class Type extends Id {
 
     public int width = 0;
 // width is used for storage allocation
 
     public Type(String s, int tag, int w) {
-        super(s, tag);
+        super(tag,s);
         width = w;
     }
     public static final Type  Int = new Type( "int" , Tag.BASIC, 4),Float = new Type( "float", Tag.BASIC, 8 ),
@@ -34,14 +34,10 @@ public class Type extends Word {
     }
 
     public static Type max(Type p1, Type p2 ) {
-        if ( !numeric(p1) || numeric(p2) ) {
-            return null;
-        } else if ( p1 == Type.Float ||p2 == Type.Float){
+        if ( p1 == Type.Float ||p2 == Type.Float){
             return Type.Float;
-        }else if ( p1 == Type.Int || p2 == Type.Int ) {
-            return Type.Int;
         } else {
-            return Type.Char;
+            return Type.Int;
         }
     }
 

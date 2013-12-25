@@ -1,6 +1,7 @@
 package inter;
 
 import lexer.Lexer;
+import parser.AbstractNode;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,12 +10,23 @@ import lexer.Lexer;
  * Time: 11:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Node {
+public class Node extends AbstractNode {
      int lexline = 0;
+    public String op;
+    public AbstractNode left,right;
 
-     public Node() {
+    public Node() {
          lexline = Lexer.line;
      }
+
+
+    public Node(String op, AbstractNode left,AbstractNode right) {
+
+        super.value=AbstractNode.statVal;
+        this.op = op;
+        this.left = left;
+        this.right=right;
+    }
 
     void error(String s) {
          throw new Error("near line "+lexline+": "+s);
