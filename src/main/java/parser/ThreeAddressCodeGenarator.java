@@ -16,6 +16,7 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class ThreeAddressCodeGenarator {
+
     public StringBuffer threeAddressCodes=new StringBuffer();
 
     Node getNode(AbstractNode l,AbstractNode r,String op) throws IOException {
@@ -24,7 +25,7 @@ public class ThreeAddressCodeGenarator {
 
         for (int i = 0; i < AbstractNode.used.size(); i++) {
 
-            if(AbstractNode.used.get(i).getClass().toString().equals("class compilerimp.Node")){
+            if(AbstractNode.used.get(i) instanceof Node){
                 n=(Node)AbstractNode.used.get(i);
                 if(n.op.equals(op)&&l==n.left&&r==n.right){
                     return n;
@@ -77,7 +78,7 @@ public class ThreeAddressCodeGenarator {
         Leaf l;
         for (int i = 0; i < AbstractNode.used.size(); i++) {
 
-            if(AbstractNode.used.get(i).getClass().toString().equals("class parser.Leaf")){
+            if(AbstractNode.used.get(i) instanceof Leaf){
                 l=(Leaf)AbstractNode.used.get(i);
                 if(token==(l.token))
                     return l;
@@ -88,7 +89,6 @@ public class ThreeAddressCodeGenarator {
         l=new Leaf(token);
         l.type=token.type;
         AbstractNode.used.add(l);
-        // toIncCode(l, bw);
         return l;
     }
 
@@ -109,7 +109,7 @@ public class ThreeAddressCodeGenarator {
             if(!n.op.equals("=")) {
                 leftstr="t"+n.left.value;
                 rightstr="t"+n.right.value;
-                if(n.left.getClass().toString().equals("class parser.Leaf")){ //if the child is leaf print its lexeme
+                if(n.left instanceof Leaf){ //if the child is leaf print its lexeme
                     l=(Leaf)n.left;
                     if(l.token.tag== Tag.ID)
                     {
@@ -123,7 +123,7 @@ public class ThreeAddressCodeGenarator {
                         leftstr=num.lexeme;
                     }
                 }
-                if(n.right.getClass().toString().equals("class parser.Leaf")){
+                if(n.right instanceof Leaf){
                     l=(Leaf)n.right;
                     if(l.token.tag==Tag.ID)
                     {
@@ -148,7 +148,7 @@ public class ThreeAddressCodeGenarator {
                 if(assId.type.equals("int")&&n.right.type.equals("float")){
                     throw new Error("narrowing conversion");
                 }
-                if(!n.right.getClass().toString().equals("class parser.Leaf")) //if the right side is node
+                if(!(n.right instanceof Leaf)) //if the right side is node
                 {
                     rightstr="t"+n.right.value;
                 }
@@ -181,7 +181,7 @@ public class ThreeAddressCodeGenarator {
             System.out.println();
         }
         else{
-            if(n.left.getClass().toString().equals("class parser.Leaf")){
+            if(n.left instanceof Leaf){
                 l=(Leaf)n.left;
                 System.out.println("t"+n.value+"= "+n.op+l.token.lexeme);
             }
@@ -202,7 +202,7 @@ public class ThreeAddressCodeGenarator {
 
     }
 
-    private String typeMax(AbstractNode l,AbstractNode r){
+    private String typeMax(AbstractNode l,AbstractNode r) {
 
         String max="int";
 

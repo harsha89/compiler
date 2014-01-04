@@ -19,6 +19,7 @@ public class Parser {
     Env top = null; // current or top symbol table
     int used = 0; // storage used for declarations
     private Id currentAssigneeSymbol;
+    private Id skipId;
     private int skipFlag=-1;
     private ThreeAddressCodeGenarator threeAddressCodeGenerator;
     public Parser(Lexer lex , StackMachine stackMachine) throws IOException {
@@ -124,12 +125,14 @@ public class Parser {
         // toCode(AbsNode.used,bw);
         AbstractNode.used=new ArrayList<AbstractNode>(); // new set of nodes for new stmt
         AbstractNode.statVal=0;
+        System.out.println(postFix);
+        postFix=new StringBuffer();
         match(';');
         L1();
     }
 
     public void L1() throws IOException {
-        if(look.tag==Tag.ID || look.tag==Tag.NUM ||look.tag==Tag.FLOAT|| look.tag==')') {
+        if(look.tag==Tag.ID || look.tag==Tag.NUM ||look.tag==Tag.FLOAT|| look.tag=='(') {
             L();
         } else {
 
@@ -151,6 +154,8 @@ public class Parser {
                 exprn=E();
                 node=threeAddressCodeGenerator.getNode(threeAddressCodeGenerator.getLeaf(currentAssigneeSymbol),exprn , "="); //3AC for assignment
             } else {
+                skipId=currentAssigneeSymbol;
+                currentAssigneeSymbol=null;
                 skipFlag=1;
                 node=E();
             }
@@ -230,6 +235,7 @@ public class Parser {
             abstractNode=threeAddressCodeGenerator.getLeaf(word);// changed
             postFix.append(workLex);
             //System.out.print(workLex);
+
         } else if( look.tag==Tag.NUM) {
             Num num=(Num) look;
             String IntNum=num.tostring();
@@ -238,7 +244,7 @@ public class Parser {
             abstractNode=threeAddressCodeGenerator.getLeaf(num);// changed
             postFix.append(IntNum);
             //System.out.print(IntNum);
-        } else if( look.tag==Tag.FLOAT) {
+        } else if(look.tag==Tag.FLOAT) {
             Real real=(Real) look;
             String floatNum =real.tostring();
             match(Tag.FLOAT);
@@ -246,6 +252,15 @@ public class Parser {
             abstractNode=threeAddressCodeGenerator.getLeaf(real);// changed
             postFix.append(floatNum);
             //System.out.print(floatNum);
+        } else if(skipId!=null && skipFlag==1) {
+            Id word=(Id) skipId;
+            String workLex=word.lexeme;
+            stackMachine.postfixTokenStack.push(word);
+            match(Tag.ID);
+            abstractNode=threeAddressCodeGenerator.getLeaf(word);// changed
+            postFix.append(workLex);
+            skipId=null;
+            //System.out.print(workLex);
         } else {
             throw new Error("Syntax Error");
         }
