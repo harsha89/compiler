@@ -21,11 +21,11 @@ public class Parser {
     private Id currentAssigneeSymbol;
     private Id skipId;
     private int skipFlag=-1;
-    private ThreeAddressCodeGenarator threeAddressCodeGenerator;
+    private ThreeAddressCodeGenerator threeAddressCodeGenerator;
     public Parser(Lexer lex , StackMachine stackMachine) throws IOException {
         lexer = lex;
         this.stackMachine=stackMachine;
-        threeAddressCodeGenerator=new ThreeAddressCodeGenarator();
+        threeAddressCodeGenerator=new ThreeAddressCodeGenerator();
         move();
     }
 
@@ -125,7 +125,9 @@ public class Parser {
         // toCode(AbsNode.used,bw);
         AbstractNode.used=new ArrayList<AbstractNode>(); // new set of nodes for new stmt
         AbstractNode.statVal=0;
+        System.out.println("Postfix notation and value of the statement");
         System.out.println(postFix);
+        System.out.println();
         postFix=new StringBuffer();
         match(';');
         L1();
@@ -152,7 +154,7 @@ public class Parser {
             if(look.tag=='=') {
                 match('=');
                 exprn=E();
-                node=threeAddressCodeGenerator.getNode(threeAddressCodeGenerator.getLeaf(currentAssigneeSymbol),exprn , "="); //3AC for assignment
+                node=threeAddressCodeGenerator.generateCodeForNode(threeAddressCodeGenerator.insertAndGetLeaf(currentAssigneeSymbol), exprn, "="); //3AC for assignment
             } else {
                 skipId=currentAssigneeSymbol;
                 currentAssigneeSymbol=null;
@@ -185,7 +187,7 @@ public class Parser {
             //System.out.print("+");
             postFix.append("+");
             stackMachine.evaluate("+");
-            node=threeAddressCodeGenerator.getNode(pretn, curtn, "+");
+            node=threeAddressCodeGenerator.generateCodeForNode(pretn, curtn, "+");
             snode=E1(node);
         }
         else {
@@ -213,7 +215,7 @@ public class Parser {
             //System.out.print("*");
             postFix.append("*");
             stackMachine.evaluate("*");
-            node=threeAddressCodeGenerator.getNode(prefn, curfn, "*");
+            node=threeAddressCodeGenerator.generateCodeForNode(prefn, curfn, "*");
             snode=T1(node);
         } else {
             snode=factnodeinh;
@@ -232,7 +234,7 @@ public class Parser {
             String workLex=word.lexeme;
             stackMachine.postfixTokenStack.push(word);
             match(Tag.ID);
-            abstractNode=threeAddressCodeGenerator.getLeaf(word);// changed
+            abstractNode=threeAddressCodeGenerator.insertAndGetLeaf(word);
             postFix.append(workLex);
             //System.out.print(workLex);
 
@@ -241,7 +243,7 @@ public class Parser {
             String IntNum=num.tostring();
             match(Tag.NUM);
             stackMachine.postfixTokenStack.push(num);
-            abstractNode=threeAddressCodeGenerator.getLeaf(num);// changed
+            abstractNode=threeAddressCodeGenerator.insertAndGetLeaf(num);
             postFix.append(IntNum);
             //System.out.print(IntNum);
         } else if(look.tag==Tag.FLOAT) {
@@ -249,7 +251,7 @@ public class Parser {
             String floatNum =real.tostring();
             match(Tag.FLOAT);
             stackMachine.postfixTokenStack.push(real);
-            abstractNode=threeAddressCodeGenerator.getLeaf(real);// changed
+            abstractNode=threeAddressCodeGenerator.insertAndGetLeaf(real);
             postFix.append(floatNum);
             //System.out.print(floatNum);
         } else if(skipId!=null && skipFlag==1) {
@@ -257,7 +259,7 @@ public class Parser {
             String workLex=word.lexeme;
             stackMachine.postfixTokenStack.push(word);
             match(Tag.ID);
-            abstractNode=threeAddressCodeGenerator.getLeaf(word);// changed
+            abstractNode=threeAddressCodeGenerator.insertAndGetLeaf(word);
             postFix.append(workLex);
             skipId=null;
             //System.out.print(workLex);
