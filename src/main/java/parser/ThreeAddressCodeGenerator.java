@@ -3,6 +3,7 @@ package parser;
 import inter.Id;
 import inter.Node;
 import lexer.Num;
+import lexer.Real;
 import lexer.Tag;
 import lexer.Token;
 
@@ -144,8 +145,15 @@ public class ThreeAddressCodeGenerator {
                         leftSym=id.lexeme;
                     }
                     else{
+                        if(l.token instanceof Num) {
                         num=(Num)l.token;
                         rightSym=num.lexeme;
+                        }
+
+                        if(l.token instanceof Real) {
+                          Real real=(Real) l.token;
+                          rightSym=real.lexeme;
+                        }
                     }
                 }
                 System.out.println(assId.lexeme+"= "+rightSym);
