@@ -107,8 +107,17 @@ public class ThreeAddressCodeGenerator {
                         id=(Id)l.token;
                         leftSym=id.lexeme;
                     } else{
-                        num=(Num)l.token;
-                        leftSym=num.lexeme;
+
+                        if(l.token instanceof Num) {
+                            num=(Num)l.token;
+                            leftSym=num.lexeme;
+                        }
+
+                        if(l.token instanceof Real) {
+                            Real real=(Real) l.token;
+                            leftSym=real.lexeme;
+                        }
+
                     }
                 }
 
@@ -120,8 +129,18 @@ public class ThreeAddressCodeGenerator {
                         rightSym=id.lexeme;
                     }
                     else{
-                        num=(Num)l.token;
-                        rightSym=num.lexeme;
+
+
+                        if(l.token instanceof Num) {
+                            num=(Num)l.token;
+                            rightSym=num.lexeme;
+                        }
+
+                        if(l.token instanceof Real) {
+                            Real real=(Real) l.token;
+                            rightSym=real.lexeme;
+                        }
+
                     }
                 }
                 System.out.println("t"+node.value+"= "+leftSym+node.op+rightSym);
