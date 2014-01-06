@@ -2,18 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44ee4980-0153-452e-808c-a1eda6265a7a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenarator.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/parser/AbstractNode.java" afterPath="$PROJECT_DIR$/src/main/java/parser/AbstractNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/parser/Leaf.java" afterPath="$PROJECT_DIR$/src/main/java/parser/Leaf.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/inter/Node.java" afterPath="$PROJECT_DIR$/src/main/java/inter/Node.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" />
     </list>
     <ignored path="compilerproject.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388750392699" ignored="false" />
-    <file path="/Parser.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388941054161" ignored="false" />
+    <file path="/Parser.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388976111546" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../CompilerImp/src/compilerimp/CompilerImp.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387944923276" ignored="false" />
     <file path="/fragment.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387945176739" ignored="false" />
-    <file path="/AbstractNode.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387948191369" ignored="false" />
+    <file path="/AbstractNode.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388943884728" ignored="false" />
     <file path="/Node.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387945797024" ignored="false" />
     <file path="/Token.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387946227526" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../CompilerImp/src/compilerimp/Token.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387947711575" ignored="false" />
@@ -26,7 +27,8 @@
     <file path="/Lexer.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387985344097" ignored="false" />
     <file path="/Type.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387966205189" ignored="false" />
     <file path="/StackMachine.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1387966400984" ignored="false" />
-    <file path="/ThreeAddressCodeGenarator.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388941764415" ignored="false" />
+    <file path="/ThreeAddressCodeGenarator.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388943837732" ignored="false" />
+    <file path="/ThreeAddressCodeGenerator.java" changelist="44ee4980-0153-452e-808c-a1eda6265a7a" time="1388979009709" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +135,7 @@
         <option name="CONDITION" value="&#13;&#13;JAVA" />
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="123" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="131" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -161,7 +163,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="189" class="parser.Parser" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="235" class="parser.Parser" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -175,7 +177,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="236" class="parser.Parser" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="244" class="parser.Parser" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -189,7 +191,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="245" class="parser.Parser" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="251" class="parser.Parser" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -203,7 +205,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="252" class="parser.Parser" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="260" class="parser.Parser" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -217,7 +219,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/Parser.java" line="261" class="parser.Parser" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="150" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -231,7 +233,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="142" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="159" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -245,7 +247,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="151" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="156" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -259,7 +261,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="148" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="21" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -273,7 +275,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="23" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="36" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -287,7 +289,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="39" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="38" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -301,7 +303,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="41" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="99" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -315,21 +317,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="93" class="parser.ThreeAddressCodeGenerator" package="parser">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="94" class="parser.ThreeAddressCodeGenerator" package="parser">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" line="100" class="parser.ThreeAddressCodeGenerator" package="parser">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -362,19 +350,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Parser.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Parser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/parser/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="128" column="0" selection-start="4237" selection-end="4237" vertical-scroll-proportion="63.08">
+            <state line="26" column="65" selection-start="839" selection-end="839" vertical-scroll-proportion="-4.807393">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreeAddressCodeGenerator.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ThreeAddressCodeGenerator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="72" selection-start="4884" selection-end="4884" vertical-scroll-proportion="0.93630576">
+            <state line="89" column="25" selection-start="2979" selection-end="2979" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -394,7 +382,7 @@
       <file leaf-file-name="Leaf.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/parser/Leaf.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="0" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0">
+            <state line="20" column="0" selection-start="364" selection-end="364" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -403,7 +391,7 @@
       <file leaf-file-name="AbstractNode.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/parser/AbstractNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="280" selection-end="280" vertical-scroll-proportion="0.0">
+            <state line="13" column="58" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -439,7 +427,7 @@
       <file leaf-file-name="grammer.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/grammer.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="36" column="4" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -464,7 +452,6 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/inter/Node.java" />
-        <option value="$PROJECT_DIR$/src/main/java/parser/AbstractNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/Leaf.java" />
         <option value="$PROJECT_DIR$/src/main/java/lexer/Token.java" />
         <option value="$PROJECT_DIR$/src/main/java/lexer/Word.java" />
@@ -476,6 +463,7 @@
         <option value="$PROJECT_DIR$/src/main/java/lexer/Real.java" />
         <option value="$PROJECT_DIR$/src/main/java/lexer/Lexer.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenarator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/parser/AbstractNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/Parser.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java" />
       </list>
@@ -545,6 +533,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -885,11 +877,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="24" width="1368" height="745" extended-state="6" />
+    <frame x="-1" y="24" width="1368" height="745" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5525876" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42570952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -901,11 +894,10 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24924242" sideWeight="0.86477464" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13522537" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24924242" sideWeight="0.41402337" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5859766" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1026,13 +1018,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/grammer.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/postfix/PostfixTokenStack.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="0" selection-start="452" selection-end="452" vertical-scroll-proportion="0.0">
@@ -1040,16 +1025,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/AbstractNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="280" selection-end="280" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/parser/Leaf.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="352" selection-end="352" vertical-scroll-proportion="0.0">
+        <state line="20" column="0" selection-start="364" selection-end="364" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1075,19 +1053,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/Parser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/AbstractNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="0" selection-start="4237" selection-end="4237" vertical-scroll-proportion="63.08">
+        <state line="13" column="58" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/grammer.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="4" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/parser/ThreeAddressCodeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="72" selection-start="4884" selection-end="4884" vertical-scroll-proportion="0.93630576">
+        <state line="89" column="25" selection-start="2979" selection-end="2979" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="65" selection-start="839" selection-end="839" vertical-scroll-proportion="-4.807393">
+          <folding />
         </state>
       </provider>
     </entry>

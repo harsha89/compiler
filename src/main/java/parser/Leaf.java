@@ -16,7 +16,7 @@ public class Leaf extends AbstractNode{
 
     public Leaf(Token token) {
         
-        super.value=AbstractNode.used.size()+1;
+        super.value=AbstractNode.processedSymbols.size()+1;
         this.token = token;
     }
     

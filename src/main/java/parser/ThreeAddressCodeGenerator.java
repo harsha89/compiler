@@ -17,14 +17,11 @@ import java.io.IOException;
  */
 public class ThreeAddressCodeGenerator {
 
-    public StringBuffer threeAddressCodes=new StringBuffer();
-
     Node generateCodeForNode(AbstractNode left, AbstractNode right, String op) throws IOException {
 
         Node n = null,temp;
 
-        for (AbstractNode abstractNode:AbstractNode.used) {
-
+        for (AbstractNode abstractNode:AbstractNode.processedSymbols) {
             if(abstractNode instanceof Node){
                 n=(Node)abstractNode;
                 if(n.op.equals(op)&&left==n.left&&right==n.right){
@@ -34,42 +31,46 @@ public class ThreeAddressCodeGenerator {
             }
         }
 
-        if(!op.equals("=")){ // widen is done for both operands if not assignment
-            if(widen(left, getMaxType(left, right))){
-                AbstractNode.statVal++;
-                left=new Node("(float)", left, null); //make a unary op for casting
+        if(!op.equals("=")){ // widen convention is done if current operation is not the assignment
+            if(widen(left,left,right)){
+                AbstractNode.tempVal++;
+                left=new Node("(float)", left, null); //using (float) as a unary operator for casting integer
                 left.type="float";
-                generateCode(left); //generate code for temporary
+                generateCode(left); //after casting temporary operator will be generated
             }
-            if(widen(right, getMaxType(left, right))){
-                AbstractNode.statVal++;
-                right=new Node("(float)", right, null); //make a unary op for casting
+            if(widen(right,left,right)){
+                AbstractNode.tempVal++;
+                right=new Node("(float)", right, null); //using (float) as a unary operator for casting integer
                 right.type="float";
-                generateCode(right); //generate code for temporary
+                generateCode(right); //after casting temporary operator will be generated
             }
         }
-        else{ // if assignment only right side is updated
-            if(widen(right, getMaxType(left, right))){
-                AbstractNode.statVal++;
-                right=new Node("(float)", right, null); //make a unary op for casting
+        else{ // if assignment then only right side will be casting
+            if(widen(right,left, right)){
+                AbstractNode.tempVal++;
+                right=new Node("(float)", right, null); //using (float) as a unary operator for casting integer
                 right.type="float";
-                generateCode(right); //generate code for temporary
+                generateCode(right); //after casting temporary operator will be generated
             }
         }
-        AbstractNode.statVal++; //give a new number to the temperory
+        AbstractNode.tempVal++; //give a new number to the temperory
         n=new Node(op, left, right);
         if(!n.op.equals("=")){
-            n.type= getMaxType(left, right);  // in assignment we can't change type
+            if(left.type=="float" || right.type=="float") {
+                n.type= "float";  // in assignment we can't change type
+            } else {
+                n.type="int";
+            }
         }
         generateCode(n);
-        AbstractNode.used.add(n);
+        AbstractNode.processedSymbols.add(n);
         return n;
     }
 
     Leaf insertAndGetLeaf(Token token) throws IOException{
 
         Leaf leaf;
-        for (AbstractNode abstractNode:AbstractNode.used) {
+        for (AbstractNode abstractNode:AbstractNode.processedSymbols) {
             if(abstractNode instanceof Leaf){
                 leaf=(Leaf)abstractNode;
                 if(token==(leaf.token))
@@ -78,10 +79,15 @@ public class ThreeAddressCodeGenerator {
         }
         leaf=new Leaf(token);
         leaf.type=token.type;
-        AbstractNode.used.add(leaf);
+        AbstractNode.processedSymbols.add(leaf);
         return leaf;
     }
 
+    /**
+     * Generate the three address code for the given node
+     * @param inNode
+     * @throws IOException
+     */
     private void generateCode(AbstractNode inNode) throws IOException{
         Leaf l;
         Node node;
@@ -103,7 +109,9 @@ public class ThreeAddressCodeGenerator {
                         num=(Num)l.token;
                         leftSym=num.lexeme;
                     }
-                } if(node.right instanceof Leaf){
+                }
+
+                if(node.right instanceof Leaf){
                     l=(Leaf)node.right;
                     if(l.token.tag==Tag.ID)
                     {
@@ -117,7 +125,7 @@ public class ThreeAddressCodeGenerator {
                 }
                 System.out.println("t"+node.value+"= "+leftSym+node.op+rightSym);
             }
-            else{  //an assignment
+            else {  //an assignment
                 l=(Leaf)node.left;
                 assId=(Id)l.token; // left of assignment is definitely id
                 if(assId.type.equals("int")&&node.right.type.equals("float")){
@@ -155,20 +163,24 @@ public class ThreeAddressCodeGenerator {
         }
     }
 
-    private boolean widen(AbstractNode n,String maxtype) throws IOException{//returns true if a widening conversion should be done
-        if (maxtype.equals(n.type))
-        {
+    /**
+     * Check for widening conventions
+     * @param n
+     * @param left
+     * @param right
+     * @return
+     * @throws IOException
+     */
+    private boolean widen(AbstractNode n,AbstractNode left, AbstractNode right) throws IOException{
+        String maxtype="int";
+        if(right.type.equals("float")||left.type.equals("float")){
+            maxtype="float";
+        }
+        if (maxtype.equals(n.type)) {
             return false;
         } else{
             return true;
         }
     }
 
-    private String getMaxType(AbstractNode l, AbstractNode r) {
-        String max="int";
-        if(r.type.equals("float")||l.type.equals("float")){
-            max="float";
-        }
-        return max;
-    }
 }

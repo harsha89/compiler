@@ -22,7 +22,7 @@ public class Node extends AbstractNode {
 
     public Node(String op, AbstractNode left,AbstractNode right) {
 
-        super.value=AbstractNode.statVal;
+        super.value=AbstractNode.tempVal;
         this.op = op;
         this.left = left;
         this.right=right;
