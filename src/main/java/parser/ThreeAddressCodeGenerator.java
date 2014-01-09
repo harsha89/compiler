@@ -161,7 +161,7 @@ public class ThreeAddressCodeGenerator {
                     if(l.token.tag==Tag.ID)
                     {
                         id=(Id)l.token;
-                        leftSym=id.lexeme;
+                        rightSym=id.lexeme;
                     }
                     else{
                         if(l.token instanceof Num) {
